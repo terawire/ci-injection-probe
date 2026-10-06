@@ -1,0 +1,20 @@
+name: CI Injection Probe
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Vulnerable sink
+        uses: PiwikPRO/actions/coverage@9fc187a6169ca8db36e5f906b911408879262303
+        with:
+          aws-access-key-id: ${{ secrets.AWS_AKI }}
+          aws-secret-access-key: ${{ secrets.AWS_SAC }}
+          github-token: ${{ secrets.REPO_PAT }}
+          head-coverage: "80"
+          threshold: "80"
